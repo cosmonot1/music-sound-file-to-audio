@@ -1,21 +1,41 @@
 import wave as wav
 
-'''
-a = wav.open('test.wav', 'r')
-b = wav.open('out.wav', 'w')
-b.setnchannels(1)
-b.setsampwidth(1)
-b.setframerate(9600)
-for d in range(100):
-	b.writeframes('01234567890abcdefghijklmnopqrstuvwxyz \
-	ABCDEFGHIJKLMNOPQRSTUVXYZ`~!@#$%^&*()_+-=\\|;\'",./<>?')
-a.close()
-b.close()
-'''
+#main runnin of program
+if __name__ == "__main__":
+	#open text file to convert
+	fName = raw_input( 'Path to input file: ' )
+	inF = open( fName, 'r' )
 
-#open text file you want to turn into sound
-#read in text file line by line or byte by byte or w/e
-#do FFT
-#DSP certain frequencies
-#do inverse FFT
-#write to file
+	#read in text file data
+	data = []
+	while True:
+		c = inF.read(1)
+		if c:
+			data.append(c)
+		else:
+			print "File read"
+			break
+
+	#TODO: FFT
+	print "FFT not implemented"
+
+	#TODO: DSP filters to increase or decrease certain frequencies
+	print "Filters not implemented"
+
+	#TODO: Inverse FFT
+	print "Inverse FFT not implemented"
+
+	#Create/open output wav file
+	out = wav.open('out.wav', 'w')
+	out.setnchannels(1)
+	out.setsampwidth(1)
+	out.setframerate(9600)
+	for c in data:
+		out.writeframes(c)
+	print "Wav data written"
+
+	#clean up and close all files
+	inF.close()
+	out.close()
+	print "Files saved and closed"
+	print "Exiting\n"
