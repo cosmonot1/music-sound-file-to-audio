@@ -1,5 +1,5 @@
 import wave as wav
-import numpy as Numpy
+from numpy import fft as FFT
 
 #main runnin of program
 if __name__ == "__main__":
@@ -24,8 +24,10 @@ if __name__ == "__main__":
 	#inverse fft http://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.ifft.html#numpy.fft.ifft
 	#numpy.fft
 	#numpy.ifft
-	print Numpy.fft.fft(data)
-
+	print data[0:10]
+	freq = FFT.fft(data)
+	time = FFT.ifft(freq)
+	print time[0:10]
 
 	#TODO: DSP filters to increase or decrease certain frequencies
 	print "Filters not implemented"
