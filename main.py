@@ -1,4 +1,5 @@
 import wave as wav
+import numpy as Numpy
 
 #main runnin of program
 if __name__ == "__main__":
@@ -11,6 +12,7 @@ if __name__ == "__main__":
 	while True:
 		c = inF.read(1)
 		if c:
+			c = ord( c[0] )
 			data.append(c)
 		else:
 			print "File read"
@@ -18,6 +20,12 @@ if __name__ == "__main__":
 
 	#TODO: FFT
 	print "FFT not implemented"
+	#fft http://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft.html#numpy.fft.fft
+	#inverse fft http://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.ifft.html#numpy.fft.ifft
+	#numpy.fft
+	#numpy.ifft
+	print Numpy.fft.fft(data)
+
 
 	#TODO: DSP filters to increase or decrease certain frequencies
 	print "Filters not implemented"
@@ -31,8 +39,8 @@ if __name__ == "__main__":
 	out.setsampwidth(1)
 	out.setframerate(9600)
 	for c in data:
-		out.writeframes(c)
-	print "Wav data written"
+		out.writeframes(chr(c))
+	print "Wav data written to out.wav"
 
 	#clean up and close all files
 	inF.close()
