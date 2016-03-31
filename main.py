@@ -21,20 +21,21 @@ if __name__ == "__main__":
 	#TODO: FFT
 	print "FFT not implemented"
 	#fft http://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft.html#numpy.fft.fft
-	#inverse fft http://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.ifft.html#numpy.fft.ifft
 	#numpy.fft
-	#numpy.ifft
 	print data[0:10]
 	freq = FFT.fft(data)
-	time = FFT.ifft(freq)
-	print time[0:10]
+	
 
 	#TODO: DSP filters to increase or decrease certain frequencies
 	print "Filters not implemented"
 
 	#TODO: Inverse FFT
+	#inverse fft http://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.ifft.html#numpy.fft.ifft
+	#numpy.ifft
 	print "Inverse FFT not implemented"
-
+	time = FFT.ifft(freq)
+	print time[0:10]
+	
 	#Create/open output wav file
 	out = wav.open('out.wav', 'w')
 	out.setnchannels(1)
