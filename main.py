@@ -1,5 +1,6 @@
 import wave as wav
 from numpy import fft as FFT
+import matplotlib.pyplot as plot
 
 #main runnin of program
 if __name__ == "__main__":
@@ -28,15 +29,30 @@ if __name__ == "__main__":
 	freq = FFT.fft(data)
 	print "FFT Completed"
 
+	#how to install plot
+	#http://matplotlib.org/faq/installing_faq.html#how-to-install
+	plot.plot(freq)
+	plot.grid()
+	plot.show()
+	exit()
+	
+
 	#TODO: DSP filters to increase or decrease certain frequencies
 	print "DSP filters not implemented"
 
+	freq2=[]
+	for a in freq:
+		if a > 20 and a < 20000:
+			freq2.append(a)
 
-
-
+	print
+	print "MIN:", min(data)
+	print "MAX:", max(data)
+	print "AVG:", 1.0*sum(data)/len(data)
+	print 
 	#inverse fft http://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.ifft.html#numpy.fft.ifft
 	#numpy.ifft
-	time = FFT.ifft(freq)
+	time = FFT.ifft(freq2)
 	print "Inverse FFT completed"
 	
 	#Create/open output wav file
