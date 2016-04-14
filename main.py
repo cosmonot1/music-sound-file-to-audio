@@ -13,7 +13,8 @@ if __name__ == "__main__":
 		c = inF.read(1)
 		if c:
 			c = ord( c[0] )
-			data.append(c)
+			for i in range(0,250):
+				data.append(c)
 		else:
 			print "File read"
 			break
@@ -49,4 +50,5 @@ if __name__ == "__main__":
 	inF.close()
 	out.close()
 	print "Files saved and closed"
-	print "Exiting\n"
+	print "Playing file\n"
+	
