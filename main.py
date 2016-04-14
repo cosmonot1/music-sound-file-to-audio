@@ -4,7 +4,8 @@ from numpy import fft as FFT
 #main runnin of program
 if __name__ == "__main__":
 	#open text file to convert
-	fName = raw_input( 'Path to input file: ' )
+	#fName = raw_input( 'Path to input file: ' )
+	fName = 'test.txt'
 	inF = open( fName, 'r' )
 
 	#read in text file data
