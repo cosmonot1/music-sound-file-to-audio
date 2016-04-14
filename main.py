@@ -25,7 +25,7 @@ if __name__ == "__main__":
 	#numpy.fft
 	print data[0:10]
 	freq = FFT.fft(data)
-	
+	print len(freq)
 
 	#TODO: DSP filters to increase or decrease certain frequencies
 	print "Filters not implemented"
