@@ -4,6 +4,7 @@ import matplotlib.pyplot as plot
 
 #main runnin of program
 if __name__ == "__main__":
+	print "Starting program"
 	#open text file to convert
 	#fName = raw_input( 'Path to input file: ' )
 	fName = 'test.txt'
@@ -26,42 +27,48 @@ if __name__ == "__main__":
 
 	#fft http://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft.html#numpy.fft.fft
 	#numpy.fft
-	freq = FFT.fft(data)
+	fftData = FFT.fft(data)
+	freqData = FFT.fftfreq(len(fftData),1.0/9600)
 	print "FFT Completed"
 
-	#how to install plot
-	#http://matplotlib.org/faq/installing_faq.html#how-to-install
-	plot.plot(freq)
-	plot.grid()
-	plot.show()
-	exit()
+	
+	
 	
 
 	#TODO: DSP filters to increase or decrease certain frequencies
 	print "DSP filters not implemented"
+	#fftData2=freqData
+	fftData2 =  []
+	divisor = 8
+	i = 0
+	while i<len(freqData):
+		if i*divisor<len(freqData):
+			fftData2.append(fftData[i*divisor])
+		else: 
+			fftData2.append(0)
+		i += 1
+	freqData2 = FFT.fftfreq(len(fftData),1.0/9600)
+	print len(freqData2)
+	print len(fftData2)
+	#how to install plot
+	#http://matplotlib.org/faq/installing_faq.html#how-to-install
+	#plot.plot(freqData,fftData,'b')
+	#plot.plot(freqData2,fftData2,'r')
+	#plot.grid()
+	#plot.show()
+	#exit()
 
-	freq2=[]
-	for a in freq:
-		if a > 20 and a < 20000:
-			freq2.append(a)
-
-	print
-	print "MIN:", min(data)
-	print "MAX:", max(data)
-	print "AVG:", 1.0*sum(data)/len(data)
-	print 
 	#inverse fft http://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.ifft.html#numpy.fft.ifft
 	#numpy.ifft
-	time = FFT.ifft(freq2)
+	time = FFT.ifft(fftData2)
 	print "Inverse FFT completed"
-	
 	#Create/open output wav file
 	print "Writing to .wav file"
 	out = wav.open('out.wav', 'w')
 	out.setnchannels(1)
 	out.setsampwidth(1)
 	out.setframerate(9600)
-	for c in data:
+	for c in time:
 		out.writeframes(chr(c))
 	print "Wav data written to out.wav"
 
