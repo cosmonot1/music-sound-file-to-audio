@@ -31,14 +31,11 @@ if __name__ == "__main__":
 	freqData = FFT.fftfreq(len(fftData),1.0/9600)
 	print "FFT Completed"
 
-	
-	
-	
-
 	#TODO: DSP filters to increase or decrease certain frequencies
 	print "DSP filters not implemented"
 	#fftData2=freqData
 	fftData2 =  []
+	#shift down the frequencies by a factor of the divisor
 	divisor = 8
 	i = 0
 	while i<len(freqData):
