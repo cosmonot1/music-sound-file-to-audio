@@ -1,55 +1,95 @@
 import wave as wav
 from numpy import fft as FFT
+import matplotlib.pyplot as plot
+
+#sum two lists together vertically
+def verticalSum(l1, l2):
+	if len(l1) != len(l2):
+		return l1
+	else:
+		l3=[]
+		for i in range(len(l1)):
+			l3.append(l1[i] + l2[i])
+		return l3
+
+#perform a frequency shift by a ratio of the divisor
+def freqShift(data, divisor):
+	i = 0
+	outData = []
+	while i<len(data):
+		if i*divisor<len(data):
+			outData.append(data[i*divisor])
+		else: 
+			outData.append(0)
+		i += 1
+	return outData
 
 #main runnin of program
 if __name__ == "__main__":
+	print "Starting program"
 	#open text file to convert
 	#fName = raw_input( 'Path to input file: ' )
-	fName = 'test.txt'
+	fName = 'in2.txt'
 	inF = open( fName, 'r' )
 
-	#read in text file data
-	data = []
-	while True:
-		c = inF.read(1)
-		if c:
-			c = ord( c[0] )
-			for i in range(0,250):
-				data.append(c)
-		else:
-			print "File read"
-			break
+	#read in text file characters
+	words = []
+	inData = inF.read()
+	words = inData.split()
+	print "File read"
 
-	#TODO: FFT
-	print "FFT not implemented"
+	#put words into data array
+	data = []
+	reps = 500
+	for w in words:
+		for i in range(reps):
+			for c in w:
+				data.append(ord(c))
+	print "Data prepared"
+
 	#fft http://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft.html#numpy.fft.fft
 	#numpy.fft
-	print data[0:10]
-	freq = FFT.fft(data)
-	print len(freq)
+	fftData = FFT.rfft(data)
+	freqData = FFT.rfftfreq(len(fftData),1.0/9600)
+	print "FFT completed"
 
 	#TODO: DSP filters to increase or decrease certain frequencies
-	print "Filters not implemented"
+	#fftData2=freqData
+	#shift down the frequencies by a factor of the divisor
+	tmp = verticalSum(freqShift(fftData, 4), fftData)
+	fftData2 = verticalSum(freqShift(fftData, 2), tmp)
+	freqData2 = FFT.rfftfreq(len(fftData),1.0/9600)
+	#print len(freqData2)
+	#print len(fftData2)
+	print "DSP filters completed"
 
-	#TODO: Inverse FFT
-	#inverse fft http://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.ifft.html#numpy.fft.ifft
-	#numpy.ifft
-	print "Inverse FFT not implemented"
-	time = FFT.ifft(freq)
-	print time[0:10]
+	#how to install plot
+	#http://matplotlib.org/faq/installing_faq.html#how-to-install
+	#plot.plot(freqData,fftData,'b')
+	#plot.plot(freqData2,fftData2,'r')
+	#plot.grid()
+	#plot.show()
+	#exit()
+
+	#Inverse FFT
+	time = FFT.irfft(fftData2)
+	mn = min(time)
+	for i in range(len(time)):
+		time[i] -= mn
+	print "Inverse FFT completed"
 	
-	#Create/open output wav file
+	# Create/open output wav file
+	print "Writing to .wav file"
 	out = wav.open('out.wav', 'w')
 	out.setnchannels(1)
 	out.setsampwidth(1)
 	out.setframerate(9600)
-	for c in data:
-		out.writeframes(chr(c))
+	for c in time:
+		out.writeframes(chr(int(c%256)))
 	print "Wav data written to out.wav"
 
 	#clean up and close all files
 	inF.close()
 	out.close()
-	print "Files saved and closed"
-	print "Playing file\n"
+	print "Files saved and closed\n"
 	
