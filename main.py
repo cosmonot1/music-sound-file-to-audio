@@ -1,6 +1,6 @@
 import wave as wav
 from numpy import fft as FFT
-import matplotlib.pyplot as plot
+#import matplotlib.pyplot as plot
 
 #sum two lists together vertically
 def verticalSum(l1, l2):
@@ -29,7 +29,7 @@ if __name__ == "__main__":
 	print "Starting program"
 	#open text file to convert
 	#fName = raw_input( 'Path to input file: ' )
-	fName = 'in2.txt'
+	fName = 'in4.txt'
 	inF = open( fName, 'r' )
 
 	#read in text file characters
@@ -59,8 +59,6 @@ if __name__ == "__main__":
 	tmp = verticalSum(freqShift(fftData, 4), fftData)
 	fftData2 = verticalSum(freqShift(fftData, 2), tmp)
 	freqData2 = FFT.rfftfreq(len(fftData),1.0/9600)
-	#print len(freqData2)
-	#print len(fftData2)
 	print "DSP filters completed"
 
 	#how to install plot
@@ -77,15 +75,18 @@ if __name__ == "__main__":
 	for i in range(len(time)):
 		time[i] -= mn
 	print "Inverse FFT completed"
-	
+
 	# Create/open output wav file
 	print "Writing to .wav file"
 	out = wav.open('out.wav', 'w')
 	out.setnchannels(1)
 	out.setsampwidth(1)
 	out.setframerate(9600)
-	for c in time:
-		out.writeframes(chr(int(c%256)))
+	for i in range(len(time)):
+		if i%(len(time)/10) == 0:
+			print "\r  %d%% written" %(i/(len(time)/100)),
+		out.writeframes(chr(int(time[i]%256)))
+	print "\r  100%% written"
 	print "Wav data written to out.wav"
 
 	#clean up and close all files
