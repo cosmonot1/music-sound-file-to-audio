@@ -29,7 +29,7 @@ if __name__ == "__main__":
 	print "Starting program"
 	#open text file to convert
 	#fName = raw_input( 'Path to input file: ' )
-	fName = 'in4.txt'
+	fName = 'in1.txt'
 	inF = open( fName, 'r' )
 
 	#read in text file characters
@@ -78,7 +78,7 @@ if __name__ == "__main__":
 
 	# Create/open output wav file
 	print "Writing to .wav file"
-	out = wav.open('out.wav', 'w')
+	out = wav.open('out1.wav', 'w')
 	out.setnchannels(1)
 	out.setsampwidth(1)
 	out.setframerate(9600)
@@ -86,7 +86,7 @@ if __name__ == "__main__":
 		if i%(len(time)/10) == 0:
 			print "\r  %d%% written" %(i/(len(time)/100)),
 		out.writeframes(chr(int(time[i]%256)))
-	print "\r  100%% written"
+	print "\r  100% written"
 	print "Wav data written to out.wav"
 
 	#clean up and close all files
